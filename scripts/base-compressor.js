@@ -6,7 +6,7 @@ module.exports.baseCompressor = function (compressFunction, options, extension, 
     if (!workdirs) {
         try {
             workdirs = JSON.parse(process.env.dirs)
-        } catch {
+        } catch (e) {
             workdirs = ['dist/']
         }
     }
