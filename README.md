@@ -1,3 +1,44 @@
+[󠁧󠁢󠁥󠁮󠁧󠁿🇬🇧]
+## Shakal (Jackal)
+### What is it?
+This is a set of node.js scripts packaged in a docker image and used for gzip and brotli compression.
+
+### How to use?
+#### Bash
+```bash
+npx shakal-cli ./dist
+# или
+npx shakal-cli '["dist/static", "dist/chunks"]' # json array of directories
+```
+#### Docker
+```
+docker run \
+    -v $(pwd)/dist:/scripts/dist \
+    --env 'dirs=["dist/", "prod/"]' \
+    -i mngame/shakal
+```
+* `-v $(pwd)/dist:/scripts/dist` – mount local directory `dist` and place it `/scripts/dist` inside container environment
+* `--env 'dirs=["dist/", "prod/"]'` – set env var `dirs`. It should be inn JSON format and contain array of strings. Each one is a name of local directory. **A string should end with `/`.**
+* `-i mngame/shakal` – image name
+
+### Development
+* `base-compressor.js` – a script that implements basic compression logic.
+
+    Arguments:
+    * compression function – any js function. So far they are brotli and gzip;
+    * compression params – object with params required by compression function;
+    * extension – File extension to compress, should start with a dot
+* `gzip.js` – gzip lvl 9 compression script;
+* `brotli.js` – brotli lvl 11 compression script.
+* `index.js` – takes a list of directories as argument and starts both compressions.
+* `bin/shakal` – console utility wrapper.
+
+```bash 
+npm start -- test
+npm start -- '["test/1", "test/2"]'
+```
+
+[🇷🇺]
 ## Шакал
 ### Что такое?
 Это набор node.js скриптов, запакованных в докер образ и используемых для сжатия в gzip и brotli.
